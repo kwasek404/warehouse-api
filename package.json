@@ -1,0 +1,31 @@
+{
+  "name": "warehouse-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "type-check": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kwasek404/warehouse-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/kwasek404/warehouse-api/issues"
+  },
+  "homepage": "https://github.com/kwasek404/warehouse-api#readme",
+  "dependencies": {
+    "hono": "^4.12.14"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260422.1",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.84.1"
+  }
+}

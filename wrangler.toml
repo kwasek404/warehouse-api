@@ -1,0 +1,14 @@
+name = "warehouse-api"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "warehouse"
+database_id = "79a7553e-9ea3-4f45-8316-cb9c3e25fb13"
+
+[[r2_buckets]]
+binding = "PHOTOS"
+bucket_name = "warehouse-photos"
