@@ -47,6 +47,25 @@ checkouts.post('/', async (c) => {
   return c.json(checkout, 201)
 })
 
+checkouts.put('/:id/consume', async (c) => {
+  const id = c.req.param('id')
+
+  const checkout = await c.env.DB.prepare(
+    'SELECT * FROM checkouts WHERE id = ? AND returned_at IS NULL'
+  ).bind(id).first<{ id: string; item_id: string; quantity: number }>()
+
+  if (!checkout) return c.json({ error: 'Checkout not found or already returned' }, 404)
+
+  const now = Date.now()
+  // Mark closed but do not restore quantity - items were permanently consumed
+  await c.env.DB.prepare(
+    'UPDATE checkouts SET returned_at = ?, returned_quantity = 0 WHERE id = ?'
+  ).bind(now, id).run()
+
+  const updated = await c.env.DB.prepare('SELECT * FROM checkouts WHERE id = ?').bind(id).first()
+  return c.json(updated)
+})
+
 checkouts.put('/:id/return', async (c) => {
   const id = c.req.param('id')
   const body: { returned_quantity?: number } = await c.req.json().catch(() => ({}))

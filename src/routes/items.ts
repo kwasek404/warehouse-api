@@ -61,6 +61,22 @@ items.post('/', async (c) => {
   return c.json(item, 201)
 })
 
+items.get('/tags', async (c) => {
+  const rows = await c.env.DB.prepare(
+    'SELECT tags FROM items WHERE tags IS NOT NULL AND tags != ""'
+  ).all<{ tags: string }>()
+
+  const tagSet = new Set<string>()
+  for (const row of rows.results) {
+    for (const tag of row.tags.split(',')) {
+      const t = tag.trim()
+      if (t) tagSet.add(t)
+    }
+  }
+
+  return c.json([...tagSet].sort())
+})
+
 items.get('/:id', async (c) => {
   const id = c.req.param('id')
   const item = await c.env.DB.prepare('SELECT * FROM items WHERE id = ?').bind(id).first()

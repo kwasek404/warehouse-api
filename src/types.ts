@@ -41,3 +41,21 @@ export interface Token {
   created_at: number
   revoked_at: number | null
 }
+
+export interface BoxGrid {
+  box_id: string
+  type_id: string
+  width_mm: number
+  depth_mm: number
+  height_mm: number | null
+  margin_mm: number | null
+  pitch_mm: number
+}
+
+export interface BoxSlot {
+  box_id: string
+  x: number
+  y: number
+  w: number
+  d: number
+}
